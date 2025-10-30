@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block body %}
+
+<div class="section-head">
+  <h2 class="section-title">Cabut Akses Manual</h2>
+  <div class="section-desc">
+    Kalau kamu cuma punya Machine ID-nya (tanpa buka halaman Devices),
+    kamu bisa pakai form ini untuk hapus akses langsung.
+  </div>
+</div>
+
+<form method="post" class="form-grid">
+
+  <div class="field">
+    <label>Machine ID yang mau dicabut *</label>
+    <input name="machine_id"
+           placeholder="ea836179_b61b_4954_a1a1_4e77bc33952a"
+           required />
+  </div>
+
+  <button class="btn-danger" type="submit">
+    ✕ Hapus Akses
+  </button>
+
+  <div class="mini-hint">
+    Setelah dicabut: device itu bakal kena "LISENSI DITOLAK".
+  </div>
+</form>
+
+{% endblock %}

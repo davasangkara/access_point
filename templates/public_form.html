@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block body %}
+
+<div class="section-head">
+  <h2 class="section-title">Request Akses</h2>
+  <div class="section-desc">
+    Cara pakai:
+    <br>1. Jalankan script <code>main.py</code> di device kamu.
+    <br>2. Kalau muncul "LISENSI DITOLAK", bakal ada Machine ID.
+    <br>3. Copy Machine ID itu ke bawah, lalu submit.
+    <br>4. Kamu akan dapet tombol WhatsApp otomatis buat kirim ke Admin.
+  </div>
+</div>
+
+<form method="post" action="{{ url_for('public_send') }}" class="form-grid">
+
+  <div class="field">
+    <label>Machine ID *</label>
+    <input name="machine_id"
+           placeholder="contoh: ea836179_b61b_4954_a1a1_4e77bc33952a"
+           required />
+  </div>
+
+  <div class="field">
+    <label>Catatan / Kontak (opsional)</label>
+    <textarea name="note" rows="3"
+      placeholder="Contoh: ini hp utama saya, WA saya 08xxxx, tolong approve."></textarea>
+  </div>
+
+  <button class="btn-primary" type="submit">
+    BUAT LINK WHATSAPP →
+  </button>
+
+  <div class="mini-hint">
+    Setelah admin whitelist, jalankan ulang script kamu.
+    Kalau lisensi valid → menu bot pulsa kebuka.
+  </div>
+</form>
+
+{% endblock %}

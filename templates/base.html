@@ -1,0 +1,490 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>{{ app_name }}</title>
+
+  <style>
+    :root{
+      --bg-grad-1:#0a0f1d;
+      --bg-grad-2:#1a2338;
+      --panel-bg:rgba(30,41,59,.55);       /* card surface */
+      --panel-border:rgba(255,255,255,.07);
+      --panel-inner:rgba(15,23,42,.6);
+
+      --text-main:#f8fafc;
+      --text-dim:#94a3b8;
+      --text-soft:#cbd5e1;
+
+      --accent-start:#6366f1;
+      --accent-end:#14b8a6;
+
+      --radius-lg:1rem;
+      --radius-md:.75rem;
+      --radius-sm:.5rem;
+
+      --danger:#ef4444;
+      --danger-bg:rgba(239,68,68,.08);
+      --success:#10b981;
+      --success-bg:rgba(16,185,129,.07);
+      --info:#3b82f6;
+      --info-bg:rgba(59,130,246,.07);
+
+      --shadow-xl:0 30px 120px rgba(0,0,0,.9);
+      --shadow-card:0 20px 60px rgba(0,0,0,.6);
+    }
+
+    *{
+      box-sizing:border-box;
+      -webkit-font-smoothing:antialiased;
+    }
+
+    body{
+      margin:0;
+      font-family:system-ui,-apple-system,"Inter","Segoe UI",Roboto,Ubuntu,sans-serif;
+      line-height:1.5;
+      color:var(--text-main);
+      background:
+        radial-gradient(circle at 20% 20%,rgba(99,102,241,.22) 0%,rgba(0,0,0,0) 60%),
+        radial-gradient(circle at 80% 10%,rgba(20,184,166,.18) 0%,rgba(0,0,0,0) 55%),
+        radial-gradient(circle at 50% 80%,rgba(15,23,42,.8) 0%,rgba(0,0,0,0) 70%),
+        linear-gradient(to bottom right,var(--bg-grad-1) 0%,var(--bg-grad-2) 100%);
+      min-height:100vh;
+      display:flex;
+      flex-direction:column;
+    }
+
+    /* HEADER NAV */
+    header.site-header{
+      position:sticky;
+      top:0;
+      z-index:40;
+      background:rgba(10,15,30,.55);
+      backdrop-filter:blur(16px) saturate(140%);
+      -webkit-backdrop-filter:blur(16px) saturate(140%);
+      border-bottom:1px solid rgba(255,255,255,.05);
+      box-shadow:0 24px 60px rgba(0,0,0,.8);
+    }
+    .nav-wrap{
+      max-width:1200px;
+      margin:0 auto;
+      padding:1rem 1.25rem;
+      display:flex;
+      flex-wrap:wrap;
+      justify-content:space-between;
+      align-items:flex-start;
+      gap:1rem;
+    }
+
+    .brand{
+      min-width:200px;
+    }
+    .brand-title{
+      margin:0;
+      font-size:1rem;
+      font-weight:600;
+      color:#fff;
+      line-height:1.2;
+      display:flex;
+      flex-wrap:wrap;
+      gap:.5rem;
+      align-items:center;
+    }
+    .brand-pill{
+      background:linear-gradient(90deg,var(--accent-start),var(--accent-end));
+      color:#0f172a;
+      font-size:.65rem;
+      font-weight:600;
+      line-height:1;
+      padding:.4rem .6rem;
+      border-radius:999px;
+      box-shadow:0 16px 40px rgba(20,184,166,.45);
+    }
+
+    nav.nav-links{
+      display:flex;
+      flex-wrap:wrap;
+      gap:.5rem;
+    }
+    nav.nav-links a{
+      text-decoration:none;
+      font-size:.8rem;
+      line-height:1.2;
+      font-weight:500;
+      padding:.6rem .8rem;
+      border-radius:var(--radius-md);
+      background:var(--panel-bg);
+      border:1px solid var(--panel-border);
+      box-shadow:var(--shadow-card);
+      color:var(--text-soft);
+      transition:.15s;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+    }
+    nav.nav-links a:hover{
+      background:var(--panel-inner);
+      color:#fff;
+      border-color:rgba(226,232,240,.4);
+    }
+    nav.nav-links a.danger{
+      color:#fff;
+      background:rgba(127,29,29,.4);
+      border:1px solid rgba(248,113,113,.6);
+    }
+    nav.nav-links a.danger:hover{
+      background:rgba(127,29,29,.6);
+      border-color:rgba(248,113,113,.9);
+    }
+
+    /* PAGE AREA */
+    .page{
+      flex:1 0 auto;
+      width:100%;
+      display:flex;
+      justify-content:center;
+      padding:2rem 1rem 4rem;
+    }
+    .page-inner{
+      width:100%;
+      max-width:1200px;
+      display:grid;
+      grid-template-columns:1fr;
+      gap:2rem;
+    }
+
+    /* SECTION CARD WRAPPER */
+    .section-card{
+      background:var(--panel-bg);
+      border:1px solid var(--panel-border);
+      border-radius:var(--radius-lg);
+      box-shadow:var(--shadow-xl);
+      padding:1.25rem 1.25rem 2rem;
+    }
+    @media(min-width:640px){
+      .section-card{
+        padding:1.5rem 1.75rem 2rem;
+      }
+    }
+
+    /* FLASH / ALERT */
+    .flash{
+      border-radius:var(--radius-md);
+      padding:.8rem 1rem;
+      font-size:.8rem;
+      line-height:1.4;
+      font-weight:500;
+      border:1px solid transparent;
+      margin-bottom:1.25rem;
+    }
+    .flash.success{
+      background:var(--success-bg);
+      border-color:var(--success);
+      color:#6ee7b7;
+    }
+    .flash.danger{
+      background:var(--danger-bg);
+      border-color:var(--danger);
+      color:#fecaca;
+    }
+    .flash.info{
+      background:var(--info-bg);
+      border-color:var(--info);
+      color:#bfdbfe;
+    }
+
+    /* TITLES */
+    .section-head{
+      display:flex;
+      flex-direction:column;
+      gap:.5rem;
+      margin-bottom:1.5rem;
+    }
+    .section-title{
+      margin:0;
+      color:#fff;
+      font-size:1rem;
+      font-weight:600;
+      line-height:1.2;
+      display:flex;
+      align-items:center;
+      flex-wrap:wrap;
+      gap:.5rem;
+    }
+    .section-desc{
+      font-size:.8rem;
+      color:var(--text-dim);
+      line-height:1.5;
+      max-width:700px;
+    }
+
+    /* FORM */
+    .form-grid{
+      max-width:480px;
+      display:grid;
+      gap:1rem;
+    }
+    .field{
+      display:flex;
+      flex-direction:column;
+      gap:.5rem;
+    }
+    label{
+      font-size:.7rem;
+      font-weight:500;
+      color:var(--text-dim);
+      line-height:1.3;
+      letter-spacing:.02em;
+    }
+    input,textarea{
+      width:100%;
+      background:rgba(15,23,42,.8);
+      color:var(--text-main);
+      border:1px solid rgba(255,255,255,.08);
+      border-radius:var(--radius-md);
+      box-shadow:inset 0 0 20px rgba(0,0,0,.6),
+                 0 20px 40px rgba(0,0,0,.6);
+      padding:.8rem .9rem;
+      font-size:.9rem;
+      line-height:1.4;
+      outline:none;
+      font-family:inherit;
+      resize:vertical;
+      transition:.15s;
+    }
+    input:focus,textarea:focus{
+      border-color:var(--accent-start);
+      box-shadow:0 0 30px rgba(99,102,241,.6),
+                 0 30px 60px rgba(0,0,0,.9);
+    }
+
+    .btn-primary{
+      appearance:none;
+      border:0;
+      cursor:pointer;
+      font-weight:600;
+      font-size:.9rem;
+      line-height:1.2;
+      color:#0f172a;
+      background:linear-gradient(90deg,var(--accent-start),var(--accent-end));
+      border-radius:var(--radius-md);
+      padding:.8rem 1rem;
+      box-shadow:0 30px 60px rgba(20,184,166,.5);
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:.5rem;
+      transition:.12s;
+    }
+    .btn-primary:active{
+      transform:scale(.98);
+    }
+
+    .btn-danger{
+      border:0;
+      cursor:pointer;
+      background:var(--danger-bg);
+      color:#fecaca;
+      border:1px solid rgba(239,68,68,.5);
+      border-radius:var(--radius-md);
+      font-size:.8rem;
+      line-height:1.2;
+      font-weight:500;
+      padding:.6rem .75rem;
+      box-shadow:0 20px 40px rgba(0,0,0,.7);
+      transition:.12s;
+    }
+    .btn-danger:hover{
+      background:rgba(127,29,29,.6);
+      color:#fff;
+    }
+    .btn-wa{
+      text-decoration:none;
+      background:#22c55e;
+      color:#0f172a;
+      font-weight:600;
+      font-size:.9rem;
+      line-height:1.2;
+      border-radius:var(--radius-md);
+      padding:.8rem 1rem;
+      box-shadow:0 30px 60px rgba(34,197,94,.45);
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:.5rem;
+      transition:.12s;
+    }
+    .btn-wa:active{
+      transform:scale(.98);
+    }
+
+    .mini-hint{
+      font-size:.7rem;
+      color:var(--text-dim);
+      line-height:1.4;
+      word-break:break-word;
+    }
+
+    /* CARD GRID UNTUK DEVICES */
+    .device-grid{
+      display:grid;
+      grid-template-columns:1fr;
+      gap:1rem;
+    }
+    @media(min-width:480px){
+      .device-grid{
+        grid-template-columns:repeat(2,1fr);
+      }
+    }
+    @media(min-width:900px){
+      .device-grid{
+        grid-template-columns:repeat(3,1fr);
+      }
+    }
+
+    .device-card{
+      background:var(--panel-inner);
+      border:1px solid var(--panel-border);
+      border-radius:var(--radius-md);
+      box-shadow:var(--shadow-card);
+      padding:1rem 1rem 1.25rem;
+      display:flex;
+      flex-direction:column;
+      gap:.75rem;
+      position:relative;
+      transition:.15s;
+    }
+    .device-card:hover{
+      box-shadow:0 30px 80px rgba(0,0,0,.9),
+                 0 0 30px rgba(99,102,241,.4);
+    }
+
+    .device-top{
+      display:flex;
+      flex-direction:column;
+      gap:.4rem;
+    }
+    .machine-id{
+      font-size:.75rem;
+      line-height:1.4;
+      color:#fff;
+      font-family:ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      word-break:break-word;
+      background:rgba(15,23,42,.8);
+      border:1px solid rgba(255,255,255,.07);
+      border-radius:var(--radius-sm);
+      padding:.5rem .6rem;
+    }
+    .note-text{
+      font-size:.8rem;
+      color:var(--text-soft);
+      line-height:1.4;
+      min-height:1rem;
+      word-break:break-word;
+    }
+
+    .meta-row{
+      font-size:.7rem;
+      color:var(--text-dim);
+      display:flex;
+      flex-wrap:wrap;
+      gap:.75rem;
+      line-height:1.4;
+    }
+
+    .device-footer{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      flex-wrap:wrap;
+      gap:.75rem;
+      margin-top:.5rem;
+    }
+    .internal-id{
+      font-size:.7rem;
+      color:#fff;
+      font-weight:500;
+      background:rgba(99,102,241,.15);
+      border:1px solid rgba(99,102,241,.4);
+      border-radius:999px;
+      padding:.4rem .6rem;
+      line-height:1.2;
+    }
+
+    /* INFO BOX (public_done) */
+    .info-box{
+      background:var(--panel-inner);
+      border:1px solid var(--panel-border);
+      border-radius:var(--radius-md);
+      box-shadow:var(--shadow-card);
+      padding:1rem 1rem 1.25rem;
+      font-size:.8rem;
+      line-height:1.4;
+      color:var(--text-soft);
+      word-break:break-word;
+    }
+    .info-box b{
+      color:#fff;
+      font-weight:600;
+    }
+
+    footer.site-footer{
+      max-width:1200px;
+      margin:2rem auto 3rem;
+      text-align:center;
+      font-size:.7rem;
+      color:var(--text-dim);
+      line-height:1.5;
+      padding:0 1rem;
+    }
+  </style>
+</head>
+
+<body>
+
+  <header class="site-header">
+    <div class="nav-wrap">
+      <div class="brand">
+        <p class="brand-title">
+          <span>{{ app_name }}</span>
+          <span class="brand-pill">access panel</span>
+        </p>
+      </div>
+
+      <nav class="nav-links">
+        <a href="{{ url_for('public_page') }}">Request Akses</a>
+
+        {% if request.cookies.get('auth') %}
+          <a href="{{ url_for('machines_list') }}">Devices</a>
+          <a href="{{ url_for('machines_add') }}">Add</a>
+          <a href="{{ url_for('machines_remove') }}">Remove</a>
+          <a class="danger" href="{{ url_for('logout') }}">Logout</a>
+        {% else %}
+          <a href="{{ url_for('login') }}">Admin Login</a>
+        {% endif %}
+      </nav>
+    </div>
+  </header>
+
+  <main class="page">
+    <div class="page-inner">
+      <section class="section-card">
+        {% if toast_msg %}
+          <div class="flash {{ toast_lvl or 'info' }}">
+            {{ toast_msg }}
+          </div>
+        {% endif %}
+
+        {% block body %}{% endblock %}
+      </section>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    GENCO AUTO TOOL • BY Dava<br>
+    akses berdasarkan Machine ID. jaga kerahasiaan panel admin.
+  </footer>
+
+</body>
+</html>

@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block body %}
+
+<div class="section-head">
+  <h2 class="section-title">Step Terakhir ✅</h2>
+  <div class="section-desc">
+    Kirim Machine ID kamu ke admin lewat WhatsApp di bawah.
+    Setelah di-approve, tinggal jalankan ulang <code>main.py</code>.
+  </div>
+</div>
+
+<div class="info-box">
+  <b>Machine ID kamu:</b><br>
+  {{ machine_id }}
+</div>
+
+{% if note %}
+<div class="info-box">
+  <b>Catatan kamu:</b><br>
+  {{ note }}
+</div>
+{% endif %}
+
+<p>
+  <a class="btn-wa" target="_blank" rel="noopener noreferrer" href="{{ wa_url }}">
+    💬 Kirim ke WhatsApp Admin
+  </a>
+</p>
+
+<div class="mini-hint">
+  Kalau tombol gak kebuka otomatis:<br>
+  <code style="font-size:.7rem;">{{ wa_url }}</code>
+</div>
+
+{% endblock %}

@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block body %}
+
+<div class="section-head">
+  <h2 class="section-title">Admin Login</h2>
+  <div class="section-desc">
+    Masuk buat kelola daftar whitelist. Jangan bagikan password ini ke siapapun.
+  </div>
+</div>
+
+<form method="post" class="form-grid">
+
+  <div class="field">
+    <label>Password Admin</label>
+    <input type="password" name="password" placeholder="••••••••" required />
+  </div>
+
+  <button class="btn-primary" type="submit">
+    Login
+  </button>
+
+  <div class="mini-hint">
+    Setelah login, kamu bisa tambah / cabut akses device secara live.
+  </div>
+</form>
+
+{% endblock %}

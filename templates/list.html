@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block body %}
+
+<div class="section-head">
+  <h2 class="section-title">Devices Aktif</h2>
+  <div class="section-desc">
+    Device yang saat ini sudah di-whitelist dan boleh jalanin script.
+    Klik <b>Remove</b> di card untuk cabut akses instan.
+  </div>
+</div>
+
+<div class="device-grid">
+  {% for row in machines %}
+  <div class="device-card">
+
+    <div class="device-top">
+      <div class="machine-id">{{ row.machine_id or row.fingerprint }}</div>
+
+      <div class="note-text">
+        {% if row.note %}
+          {{ row.note }}
+        {% else %}
+          <span style="opacity:.5;">(tanpa catatan)</span>
+        {% endif %}
+      </div>
+
+      <div class="meta-row">
+        <div>Daftar: {{ row.created_at }}</div>
+      </div>
+    </div>
+
+    <div class="device-footer">
+      <div class="internal-id">#{{ row.id }}</div>
+
+      <form method="post"
+            action="{{ url_for('machines_remove_direct', machine_id=(row.machine_id or row.fingerprint)) }}"
+            onsubmit="return confirm('Cabut akses device ini?');">
+        <button class="btn-danger" type="submit">
+          ✕ Remove
+        </button>
+      </form>
+    </div>
+
+  </div>
+  {% endfor %}
+</div>
+
+<div class="section-desc" style="margin-top:1.5rem;">
+  • Add = whitelist device baru<br>
+  • Remove = blokir langsung (device bakal dapet LISENSI DITOLAK)
+</div>
+
+{% endblock %}

@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block body %}
+
+<div class="section-head">
+  <h2 class="section-title">Tambah / Whitelist Device</h2>
+  <div class="section-desc">
+    Masukkan Machine ID user. Setelah sukses, user cukup jalankan ulang
+    <code>main.py</code> — otomatis kebuka, nggak perlu edit kode.
+  </div>
+</div>
+
+<form method="post" class="form-grid">
+
+  <div class="field">
+    <label>Machine ID *</label>
+    <input name="machine_id"
+           placeholder="ea836179_b61b_4954_a1a1_4e77bc33952a"
+           required />
+  </div>
+
+  <div class="field">
+    <label>Catatan (opsional)</label>
+    <textarea name="note" rows="3"
+      placeholder="Misal: HP Andi, akun utama."></textarea>
+  </div>
+
+  <button class="btn-primary" type="submit">
+    + Whitelist Sekarang
+  </button>
+
+  <div class="mini-hint">
+    Setelah di-approve, status device jadi aktif.<br>
+    Admin masih bisa cabut lagi kapan aja.
+  </div>
+</form>
+
+{% endblock %}
